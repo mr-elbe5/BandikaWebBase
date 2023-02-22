@@ -19,7 +19,8 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="library" name="lib1" level="project" />
-    <orderEntry type="module" module-name="BandikaBase" />
+    <orderEntry type="library" exported="" name="baselibs" level="project" />
+    <orderEntry type="library" name="catalina" level="project" />
+    <orderEntry type="module" module-name="BandikaBase" exported="" />
   </component>
 </module>
