@@ -309,7 +309,7 @@ public class UserData extends BaseData implements IJsonData {
 
     public boolean hasAnyContentRight() {
         return hasSystemRight(SystemZone.CONTENTEDIT) || hasSystemRight(SystemZone.CONTENTAPPROVE) ||
-                hasSystemRight(SystemZone.SPECIFICCONTENTEDIT) || hasSystemRight(SystemZone.SPECIFICCONTENTAPPROVE);
+                hasSystemRight(SystemZone.CONTENTADMINISTRATION);
     }
 
     public boolean isRoot(){

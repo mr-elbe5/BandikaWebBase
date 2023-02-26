@@ -174,8 +174,6 @@ public class UserBean extends DbBean {
 
     private static final String API_LOGIN_SQL = "SELECT pwd,id,change_date,first_name,last_name,email,token,token_expiration,now() FROM t_user WHERE login=? AND approved=TRUE AND locked=FALSE AND deleted=FALSE";
 
-    private static final String SET_TOKEN_SQL = "UPDATE t_user SET token=?,token_expiration=? WHERE id=?";
-
     public UserData loginApiUser(String login, String pwd) {
         Connection con = getConnection();
         PreparedStatement pst = null;
@@ -219,6 +217,8 @@ public class UserBean extends DbBean {
         }
         return data;
     }
+
+    private static final String SET_TOKEN_SQL = "UPDATE t_user SET token=? WHERE id=?";
 
     public boolean setToken(UserData data){
         Connection con = startTransaction();

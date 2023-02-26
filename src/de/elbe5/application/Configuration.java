@@ -139,7 +139,7 @@ public class Configuration {
 
     // read from config file
 
-    private static String getSafeInitParameter(ServletContext servletContext, String key){
+    protected static String getSafeInitParameter(ServletContext servletContext, String key){
         String s=servletContext.getInitParameter(key);
         return s==null ? "" : s;
     }
