@@ -56,9 +56,6 @@
                 </form:textarea>
                 <form:file name="portrait" label="_portrait"><% if (user.hasPortrait()) {%><img src="/ctrl/user/showPortrait/<%=user.getId()%>" alt="<%=$H(user.getName())%>"/> <%}%>
                 </form:file>
-                <form:line label="_approved" padded="true">
-                    <form:check name="approved" value="true" checked="<%=user.isApproved()%>"></form:check>
-                </form:line>
                 <h3><%=$SH("_address")%>
                 </h3>
                 <form:text name="street" label="_street" value="<%=$H(user.getStreet())%>"/>
@@ -68,9 +65,6 @@
                 <h3><%=$SH("_contact")%>
                 </h3>
                 <form:text name="email" label="_email" required="true" value="<%=$H(user.getEmail())%>"/>
-                <form:line label="_emailVerified" padded="true">
-                    <form:check name="emailVerified" value="true" checked="<%=user.isEmailVerified()%>"></form:check>
-                </form:line>
                 <form:text name="phone" label="_phone" value="<%=$H(user.getPhone())%>"/>
                 <form:text name="fax" label="_fax" value="<%=$H(user.getFax())%>"/>
                 <form:text name="mobile" label="_mobile" value="<%=$H(user.getMobile())%>"/>
