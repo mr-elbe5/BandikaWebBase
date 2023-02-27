@@ -46,6 +46,7 @@ public class TimerController extends Controller {
     }
 
     public IResponse openEditTimerTask(RequestData rdata) {
+        assertSessionCall(rdata);
         checkRights(rdata.hasSystemRight(SystemZone.APPLICATION));
         String name = rdata.getAttributes().getString("timerName");
         TimerTaskData task = Timer.getInstance().getTaskCopy(name);
@@ -54,6 +55,7 @@ public class TimerController extends Controller {
     }
 
     public IResponse saveTimerTask(RequestData rdata) {
+        assertSessionCall(rdata);
         checkRights(rdata.hasSystemRight(SystemZone.APPLICATION));
         TimerTaskData data = (TimerTaskData) rdata.getSessionObject("timerTaskData");
         if (data==null){

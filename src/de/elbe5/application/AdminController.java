@@ -50,6 +50,7 @@ public class AdminController extends Controller {
     }
 
     public IResponse openAdministration(RequestData rdata){
+        assertSessionCall(rdata);
         if (rdata.hasSystemRight(SystemZone.USER))
             return openPersonAdministration(rdata);
         if (rdata.hasSystemRight(SystemZone.APPLICATION))
@@ -58,16 +59,19 @@ public class AdminController extends Controller {
     }
 
     public IResponse openSystemAdministration(RequestData rdata) {
+        assertSessionCall(rdata);
         checkRights(rdata.hasAnySystemRight());
         return showSystemAdministration(rdata);
     }
 
     public IResponse openPersonAdministration(RequestData rdata) {
+        assertSessionCall(rdata);
         checkRights(rdata.hasAnySystemRight());
         return showPersonAdministration(rdata);
     }
 
     public IResponse restart(RequestData rdata) {
+        assertSessionCall(rdata);
         checkRights(rdata.hasSystemRight(SystemZone.APPLICATION));
         String path = ApplicationPath.getAppROOTPath() + "/WEB-INF/web.xml";
         File f = new File(path);
@@ -81,6 +85,7 @@ public class AdminController extends Controller {
     }
 
     public IResponse reloadUserCache(RequestData rdata) {
+        assertSessionCall(rdata);
         checkRights(rdata.hasSystemRight(SystemZone.APPLICATION));
         UserCache.setDirty();
         UserCache.checkDirty();

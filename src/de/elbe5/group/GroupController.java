@@ -47,6 +47,7 @@ public class GroupController extends Controller {
     }
 
     public IResponse openEditGroup(RequestData rdata) {
+        assertSessionCall(rdata);
         checkRights(rdata.hasSystemRight(SystemZone.USER));
         int groupId = rdata.getId();
         GroupData data = GroupBean.getInstance().getGroup(groupId);
@@ -55,6 +56,7 @@ public class GroupController extends Controller {
     }
 
     public IResponse openCreateGroup(RequestData rdata) {
+        assertSessionCall(rdata);
         checkRights(rdata.hasSystemRight(SystemZone.USER));
         GroupData data = new GroupData();
         data.setNew(true);
@@ -64,6 +66,7 @@ public class GroupController extends Controller {
     }
 
     public IResponse saveGroup(RequestData rdata) {
+        assertSessionCall(rdata);
         checkRights(rdata.hasSystemRight(SystemZone.USER));
         GroupData data = (GroupData) rdata.getSessionObject("groupData");
         if (data==null){
@@ -80,6 +83,7 @@ public class GroupController extends Controller {
     }
 
     public IResponse deleteGroup(RequestData rdata) {
+        assertSessionCall(rdata);
         checkRights(rdata.hasSystemRight(SystemZone.USER));
         int id = rdata.getId();
         if (id < BaseData.ID_MIN) {

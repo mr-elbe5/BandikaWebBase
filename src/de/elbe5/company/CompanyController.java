@@ -46,6 +46,7 @@ public class CompanyController extends Controller {
     }
 
     public IResponse openEditCompany(RequestData rdata) {
+        assertSessionCall(rdata);
         checkRights(rdata.hasSystemRight(SystemZone.USER));
         int companyId = rdata.getId();
         CompanyData data = CompanyBean.getInstance().getCompany(companyId);
@@ -54,6 +55,7 @@ public class CompanyController extends Controller {
     }
 
     public IResponse openCreateCompany(RequestData rdata) {
+        assertSessionCall(rdata);
         checkRights(rdata.hasSystemRight(SystemZone.USER));
         CompanyData data = new CompanyData();
         data.setNew(true);
@@ -63,6 +65,7 @@ public class CompanyController extends Controller {
     }
 
     public IResponse saveCompany(RequestData rdata) {
+        assertSessionCall(rdata);
         checkRights(rdata.hasSystemRight(SystemZone.USER));
         CompanyData data = (CompanyData) rdata.getSessionObject("companyData");
         if (data==null){
@@ -79,6 +82,7 @@ public class CompanyController extends Controller {
     }
 
     public IResponse deleteCompany(RequestData rdata) {
+        assertSessionCall(rdata);
         checkRights(rdata.hasSystemRight(SystemZone.USER));
         int id = rdata.getId();
         if (id < BaseData.ID_MIN) {

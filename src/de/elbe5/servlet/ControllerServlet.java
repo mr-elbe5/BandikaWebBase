@@ -30,7 +30,7 @@ public class ControllerServlet extends WebServlet {
         String uri = request.getRequestURI();
         RequestType requestType = RequestType.any;
         if (uri.startsWith("/ctrl/")){
-            requestType = RequestType.control;
+            requestType = RequestType.session;
             uri = uri.substring(6);
         }
         else if (uri.startsWith("/api/")){

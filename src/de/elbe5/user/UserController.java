@@ -62,6 +62,7 @@ public class UserController extends Controller {
     }
 
     protected IResponse sessionLogin(RequestData rdata) {
+        assertSessionCall(rdata);
         checkRights(rdata.isPostback());
         String login = rdata.getAttributes().getString("login");
         String pwd = rdata.getAttributes().getString("password");
@@ -121,6 +122,7 @@ public class UserController extends Controller {
     }
 
     public IResponse showCaptcha(RequestData rdata) {
+        assertSessionCall(rdata);
         String captcha = UserSecurity.generateCaptchaString();
         rdata.setSessionObject(RequestKeys.KEY_CAPTCHA, captcha);
         BinaryFile data = UserSecurity.getCaptcha(captcha);
@@ -131,6 +133,7 @@ public class UserController extends Controller {
     }
 
     public IResponse logout(RequestData rdata) {
+        assertSessionCall(rdata);
         rdata.setSessionUser(null);
         rdata.resetSession();
         rdata.setMessage(LocalizedStrings.string("_loggedOut"), RequestKeys.MESSAGE_TYPE_SUCCESS);
@@ -141,6 +144,7 @@ public class UserController extends Controller {
     }
 
     public IResponse openEditUser(RequestData rdata) {
+        assertSessionCall(rdata);
         checkRights(rdata.hasSystemRight(SystemZone.USER));
         int userId = rdata.getId();
         UserData data = UserBean.getInstance().getUser(userId);
@@ -149,6 +153,7 @@ public class UserController extends Controller {
     }
 
     public IResponse openCreateUser(RequestData rdata) {
+        assertSessionCall(rdata);
         checkRights(rdata.hasSystemRight(SystemZone.USER));
         UserData data = new UserData();
         data.setNew(true);
@@ -158,6 +163,7 @@ public class UserController extends Controller {
     }
 
     public IResponse saveUser(RequestData rdata) {
+        assertSessionCall(rdata);
         checkRights(rdata.hasSystemRight(SystemZone.USER));
         UserData data = (UserData) rdata.getSessionObject("userData");
         data.readSettingsRequestData(rdata);
@@ -174,6 +180,7 @@ public class UserController extends Controller {
     }
 
     public IResponse deleteUser(RequestData rdata) {
+        assertSessionCall(rdata);
         checkRights(rdata.hasSystemRight(SystemZone.USER));
         int id = rdata.getId();
         if (id < BaseData.ID_MIN) {
@@ -187,6 +194,7 @@ public class UserController extends Controller {
     }
 
     public IResponse showPortrait(RequestData rdata) {
+        assertSessionCall(rdata);
         int userId = rdata.getId();
         BinaryFile file = UserBean.getInstance().getBinaryPortraitData(userId);
         if (file==null){
@@ -196,16 +204,19 @@ public class UserController extends Controller {
     }
 
     public IResponse openProfile(RequestData rdata) {
+        assertSessionCall(rdata);
         checkRights(rdata.isLoggedIn());
         return showProfile();
     }
 
     public IResponse openChangePassword(RequestData rdata) {
+        assertSessionCall(rdata);
         checkRights(rdata.isLoggedIn());
         return showChangePassword();
     }
 
     public IResponse changePassword(RequestData rdata) {
+        assertSessionCall(rdata);
         checkRights(rdata.isLoggedIn() && rdata.getUserId() == rdata.getId());
         UserData user = UserBean.getInstance().getUser(rdata.getLoginUser().getId());
         if (user==null){
@@ -238,11 +249,13 @@ public class UserController extends Controller {
     }
 
     public IResponse openChangeProfile(RequestData rdata) {
+        assertSessionCall(rdata);
         checkRights(rdata.isLoggedIn());
         return showChangeProfile();
     }
 
     public IResponse changeProfile(RequestData rdata) {
+        assertSessionCall(rdata);
         int userId = rdata.getId();
         checkRights(rdata.isLoggedIn() && rdata.getUserId() == userId);
         UserData data = UserBean.getInstance().getUser(userId);

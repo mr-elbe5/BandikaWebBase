@@ -39,12 +39,10 @@ public abstract class Controller {
         return openAdminPage(rdata, "/WEB-INF/_jsp/administration/personAdministration.jsp", LocalizedStrings.string("_personAdministration"));
     }
 
-    protected IResponse showContentAdministration(RequestData rdata) {
-        return openAdminPage(rdata, "/WEB-INF/_jsp/administration/contentAdministration.jsp", LocalizedStrings.string("_contentAdministration"));
-    }
-
-    protected IResponse showContentLog(RequestData rdata) {
-        return openAdminPage(rdata, "/WEB-INF/_jsp/administration/contentLog.jsp", LocalizedStrings.string("_contentLog"));
+    protected void assertSessionCall(RequestData rdata){
+        if (rdata.getType()!=RequestType.session){
+            throw new ResponseException(HttpServletResponse.SC_UNAUTHORIZED);
+        }
     }
 
     protected void assertApiCall(RequestData rdata){
