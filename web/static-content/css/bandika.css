@@ -23,16 +23,32 @@ p:last-child {
   padding-bottom: calc(0.375rem + 1px);
 }
 
+.htmlBox {
+  padding: 1rem;
+}
+
+.imageBox {
+  padding: 0;
+}
+.imageBox img {
+  width: 100%;
+}
+
+.imageScrollBox {
+  padding: 0;
+  overflow-x: auto;
+}
+
 .flexBoxContainer {
   display: flex;
   flex-wrap: wrap;
-  margin-right: -15px;
-  margin-left: -15px;
+  margin-right: -8px;
+  margin-left: -8px;
 }
 
 .flexBox {
   width: 100%;
-  padding: 15px;
+  padding: 8px;
 }
 
 .flexBox4 {

@@ -27,6 +27,23 @@ p:last-child {
   padding-bottom: calc(0.375rem + 1px);
 }
 
+.htmlBox{
+  padding: 1rem;
+}
+
+.imageBox{
+  padding: 0;
+
+  img{
+    width: 100%;
+  }
+}
+
+.imageScrollBox{
+  padding: 0;
+  overflow-x: auto;
+}
+
 .flexBoxContainer{
   @include make-row();
 }
