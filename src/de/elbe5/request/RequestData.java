@@ -11,6 +11,7 @@ package de.elbe5.request;
 import de.elbe5.application.Configuration;
 import de.elbe5.base.*;
 import de.elbe5.rights.SystemZone;
+import de.elbe5.user.UserBean;
 import de.elbe5.user.UserData;
 
 import jakarta.servlet.http.*;
@@ -39,12 +40,23 @@ public class RequestData {
 
     private final RequestType type;
 
+    private UserData apiUser;
+
     private FormError formError = null;
 
     public RequestData(String method, RequestType type, HttpServletRequest request) {
         this.request = request;
         this.type = type;
         this.method = method;
+        if (type==RequestType.api) {
+            String apiToken = request.getHeader("Authentication");
+            if (apiToken == null || apiToken.isEmpty())
+                apiToken = request.getHeader("token");
+            if (apiToken == null || apiToken.isEmpty()){
+                return;
+            }
+            apiUser = UserBean.getInstance().loginUserByToken(apiToken);
+        }
     }
 
     public void init(){
@@ -99,6 +111,9 @@ public class RequestData {
     /************ user ****************/
 
     public UserData getLoginUser() {
+        if (type==RequestType.api){
+            return apiUser;
+        }
         return getSessionUser();
     }
 

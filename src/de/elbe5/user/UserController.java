@@ -20,7 +20,11 @@ import de.elbe5.servlet.Controller;
 import de.elbe5.servlet.ControllerCache;
 import de.elbe5.response.*;
 
+import de.elbe5.servlet.ResponseException;
 import jakarta.servlet.http.HttpServletResponse;
+import org.json.simple.JSONObject;
+
+import java.time.LocalDateTime;
 
 public class UserController extends Controller {
 
@@ -51,6 +55,13 @@ public class UserController extends Controller {
     }
 
     public IResponse login(RequestData rdata) {
+        if (rdata.getType()==RequestType.api){
+            return apiLogin(rdata);
+        }
+        return sessionLogin(rdata);
+    }
+
+    protected IResponse sessionLogin(RequestData rdata) {
         checkRights(rdata.isPostback());
         String login = rdata.getAttributes().getString("login");
         String pwd = rdata.getAttributes().getString("password");
@@ -69,6 +80,44 @@ public class UserController extends Controller {
         if (!next.isEmpty())
                 return new ForwardResponse(next);
         return showHome();
+    }
+
+    @SuppressWarnings("unchecked")
+    protected IResponse apiLogin(RequestData rdata) {
+        assertApiCall(rdata);
+        if (!rdata.isPostback())
+            throw new ResponseException(HttpServletResponse.SC_UNAUTHORIZED);
+        String login = rdata.getAttributes().getString("login");
+        String pwd = rdata.getAttributes().getString("password");
+        if (login.length() == 0 || pwd.length() == 0) {
+            return new StatusResponse(HttpServletResponse.SC_UNAUTHORIZED);
+        }
+        UserData data = UserBean.getInstance().loginApiUser(login, pwd);
+        if (data == null) {
+            Log.info("bad login of "+login);
+            return new StatusResponse(HttpServletResponse.SC_UNAUTHORIZED);
+        }
+        if (data.getToken().isEmpty()){
+            if (!UserBean.getInstance().setToken(data))
+                return new StatusResponse(HttpServletResponse.SC_UNAUTHORIZED);
+        }
+        JSONObject json = new JSONObject();
+        json.put("id",data.getId());
+        json.put("login",data.getLogin());
+        json.put("name", data.getName());
+        json.put("token", data.getToken());
+        Log.log(json.toJSONString());
+        return new JsonResponse(json.toJSONString());
+    }
+
+    public IResponse checkTokenLogin(RequestData rdata) {
+        assertApiCall(rdata);
+        if (!rdata.isPostback())
+            throw new ResponseException(HttpServletResponse.SC_UNAUTHORIZED);
+        UserData data=rdata.getLoginUser();
+        if (data==null)
+            return new StatusResponse(HttpServletResponse.SC_UNAUTHORIZED);
+        return new StatusResponse(HttpServletResponse.SC_OK);
     }
 
     public IResponse showCaptcha(RequestData rdata) {

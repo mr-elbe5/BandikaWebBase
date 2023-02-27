@@ -6,6 +6,7 @@ import de.elbe5.response.IResponse;
 import de.elbe5.response.ForwardResponse;
 
 import jakarta.servlet.http.HttpServletResponse;
+import org.json.simple.JSONObject;
 
 public abstract class Controller {
 
@@ -44,5 +45,18 @@ public abstract class Controller {
 
     protected IResponse showContentLog(RequestData rdata) {
         return openAdminPage(rdata, "/WEB-INF/_jsp/administration/contentLog.jsp", LocalizedStrings.string("_contentLog"));
+    }
+
+    protected void assertApiCall(RequestData rdata){
+        if (rdata.getType()!=RequestType.api){
+            throw new ResponseException(HttpServletResponse.SC_UNAUTHORIZED);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    protected JSONObject getIdJson(int id) {
+        JSONObject json = new JSONObject();
+        json.put("id",id);
+        return json;
     }
 }
