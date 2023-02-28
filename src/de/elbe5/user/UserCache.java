@@ -23,7 +23,7 @@ public class UserCache {
 
     private static int version = 1;
     private static boolean dirty = true;
-    private static final Integer lockObj = 1;
+    private static final Object lockObj = new Object();
 
     private static Map<Integer, UserData> userMap = new HashMap<>();
 
