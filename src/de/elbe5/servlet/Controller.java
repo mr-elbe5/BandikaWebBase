@@ -40,7 +40,7 @@ public abstract class Controller {
     }
 
     protected void assertSessionCall(RequestData rdata){
-        if (rdata.getType()!=RequestType.session){
+        if (rdata.getType()!=RequestType.session && rdata.getType()!=RequestType.content){
             throw new ResponseException(HttpServletResponse.SC_UNAUTHORIZED);
         }
     }
