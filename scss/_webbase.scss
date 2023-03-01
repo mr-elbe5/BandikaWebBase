@@ -312,7 +312,7 @@ form{
 
   }
 
-  span.treeImage{
+  span.hoverLine{
     span.hoverImage{
       position: absolute;
       z-index: $zindex-tooltip;
@@ -321,7 +321,7 @@ form{
     }
   }
 
-  span.treeImage:hover{
+  span.hoverLine:hover{
     span.hoverImage{
       display:inline-block;
     }

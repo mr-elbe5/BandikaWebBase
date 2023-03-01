@@ -265,13 +265,13 @@ form .form-control-file, form .form-control-range {
   border: 1px solid #343a40;
   border-radius: 3px;
 }
-.treeSection span.treeImage span.hoverImage {
+.treeSection span.hoverLine span.hoverImage {
   position: absolute;
   z-index: 11070;
   left: 200px;
   display: none;
 }
-.treeSection span.treeImage:hover span.hoverImage {
+.treeSection span.hoverLine:hover span.hoverImage {
   display: inline-block;
 }
 .treeSection .dropdown-menu {
