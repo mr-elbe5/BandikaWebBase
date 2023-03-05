@@ -8,9 +8,8 @@
  */
 package de.elbe5.user;
 
-import de.elbe5.application.Configuration;
-import de.elbe5.application.MailHelper;
 import de.elbe5.base.*;
+import de.elbe5.data.BaseData;
 import de.elbe5.request.*;
 import de.elbe5.rights.SystemZone;
 import de.elbe5.servlet.Controller;
@@ -19,9 +18,6 @@ import de.elbe5.response.*;
 
 import de.elbe5.servlet.ResponseException;
 import jakarta.servlet.http.HttpServletResponse;
-import org.json.simple.JSONObject;
-
-import java.time.LocalDateTime;
 
 public class UserController extends Controller {
 

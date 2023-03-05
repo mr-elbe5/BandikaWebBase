@@ -9,7 +9,7 @@
 package de.elbe5.database;
 
 import de.elbe5.application.ApplicationPath;
-import de.elbe5.base.BaseData;
+import de.elbe5.data.BaseData;
 import de.elbe5.base.Log;
 import de.elbe5.base.FileHelper;
 

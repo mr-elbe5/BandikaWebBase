@@ -8,7 +8,7 @@
  */
 package de.elbe5.group;
 
-import de.elbe5.base.BaseData;
+import de.elbe5.data.BaseData;
 import de.elbe5.request.RequestData;
 import de.elbe5.rights.SystemZone;
 import de.elbe5.user.UserData;

@@ -10,10 +10,10 @@ package de.elbe5.user;
 
 import de.elbe5.base.*;
 import de.elbe5.application.Configuration;
+import de.elbe5.data.BaseData;
 import de.elbe5.group.GroupData;
 import de.elbe5.request.RequestData;
 import de.elbe5.rights.SystemZone;
-import org.json.simple.JSONObject;
 
 import javax.imageio.ImageIO;
 import javax.imageio.ImageWriter;
@@ -346,10 +346,9 @@ public class UserData extends BaseData implements IJsonData {
 
     @Override
     public JsonObject getJson() {
-        JsonObject json = new JsonObject();
-        json.add("id",getId());
-        json.addIfNotEmpty("name",getName());
-        return json;
+        return super.getJson()
+                .add("id", getId())
+                .add("name", getName());
     }
 
     public JsonObject getLoginJson() {
