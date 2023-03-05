@@ -1,5 +1,6 @@
 package de.elbe5.servlet;
 
+import de.elbe5.base.JsonObject;
 import de.elbe5.base.LocalizedStrings;
 import de.elbe5.request.*;
 import de.elbe5.response.IResponse;
@@ -51,10 +52,9 @@ public abstract class Controller {
         }
     }
 
-    @SuppressWarnings("unchecked")
-    protected JSONObject getIdJson(int id) {
-        JSONObject json = new JSONObject();
-        json.put("id",id);
+    protected JsonObject getIdJson(int id) {
+        JsonObject json = new JsonObject();
+        json.add("id",id);
         return json;
     }
 }

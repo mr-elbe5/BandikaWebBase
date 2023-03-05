@@ -1,17 +1,23 @@
 package de.elbe5.response;
 
 import de.elbe5.application.Configuration;
+import de.elbe5.base.JsonObject;
 import de.elbe5.base.Log;
 import de.elbe5.request.RequestData;
 
 import jakarta.servlet.ServletContext;
 import jakarta.servlet.ServletOutputStream;
 import jakarta.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 
 public class JsonResponse implements IResponse {
 
     private final String json;
+
+    public JsonResponse(JsonObject json) {
+        this.json = json.toString();
+    }
 
     public JsonResponse(String json) {
         this.json = json;

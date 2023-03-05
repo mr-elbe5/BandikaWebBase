@@ -8,13 +8,7 @@
  */
 package de.elbe5.user;
 
-import de.elbe5.base.BaseData;
-import de.elbe5.base.BinaryFile;
-import de.elbe5.base.IJsonData;
-import de.elbe5.base.Log;
-import de.elbe5.base.ImageHelper;
-import de.elbe5.base.StringHelper;
-import de.elbe5.base.LocalizedStrings;
+import de.elbe5.base.*;
 import de.elbe5.application.Configuration;
 import de.elbe5.group.GroupData;
 import de.elbe5.request.RequestData;
@@ -25,7 +19,6 @@ import javax.imageio.ImageIO;
 import javax.imageio.ImageWriter;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.*;
 
 public class UserData extends BaseData implements IJsonData {
@@ -352,11 +345,21 @@ public class UserData extends BaseData implements IJsonData {
     }
 
     @Override
-    @SuppressWarnings("unchecked")
-    public JSONObject getJson() {
-        JSONObject json = new JSONObject();
-        json.put("id",getId());
-        json.put("name",getName());
+    public JsonObject getJson() {
+        JsonObject json = new JsonObject();
+        json.add("id",getId());
+        json.addIfNotEmpty("name",getName());
         return json;
     }
+
+    public JsonObject getLoginJson() {
+        JsonObject json = new JsonObject();
+        json.add("id",getId());
+        json.add("login",getLogin());
+        json.add("name", getName());
+        json.add("token", getToken());
+        return json;
+    }
+
+
 }

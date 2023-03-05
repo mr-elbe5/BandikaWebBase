@@ -10,10 +10,7 @@ package de.elbe5.user;
 
 import de.elbe5.application.Configuration;
 import de.elbe5.application.MailHelper;
-import de.elbe5.base.BaseData;
-import de.elbe5.base.BinaryFile;
-import de.elbe5.base.LocalizedStrings;
-import de.elbe5.base.Log;
+import de.elbe5.base.*;
 import de.elbe5.request.*;
 import de.elbe5.rights.SystemZone;
 import de.elbe5.servlet.Controller;
@@ -83,7 +80,6 @@ public class UserController extends Controller {
         return showHome();
     }
 
-    @SuppressWarnings("unchecked")
     protected IResponse apiLogin(RequestData rdata) {
         assertApiCall(rdata);
         if (!rdata.isPostback())
@@ -102,13 +98,8 @@ public class UserController extends Controller {
             if (!UserBean.getInstance().setToken(data))
                 return new StatusResponse(HttpServletResponse.SC_UNAUTHORIZED);
         }
-        JSONObject json = new JSONObject();
-        json.put("id",data.getId());
-        json.put("login",data.getLogin());
-        json.put("name", data.getName());
-        json.put("token", data.getToken());
-        Log.log(json.toJSONString());
-        return new JsonResponse(json.toJSONString());
+        JsonObject json = data.getLoginJson();
+        return new JsonResponse(json);
     }
 
     public IResponse checkTokenLogin(RequestData rdata) {
