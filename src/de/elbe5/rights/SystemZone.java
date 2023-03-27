@@ -8,9 +8,46 @@
  */
 package de.elbe5.rights;
 
+import java.util.*;
+
 public enum SystemZone {
-    APPLICATION, USER, TEMPLATE, CONTENTREAD,
-    CONTENTEDIT, CONTENTAPPROVE, CONTENTADMINISTRATION
+    APPLICATION, USER, CONTENTREAD,
+    CONTENTEDIT, CONTENTAPPROVE, CONTENTADMINISTRATION;
+
+    private static List<SystemZone> elevatedZones = Arrays.asList(APPLICATION, USER, CONTENTREAD, CONTENTEDIT, CONTENTAPPROVE, CONTENTADMINISTRATION);
+    private static List<SystemZone> contentReadZones = Arrays.asList(CONTENTREAD, CONTENTEDIT, CONTENTAPPROVE, CONTENTADMINISTRATION);
+    private static List<SystemZone> contentEditZones = Arrays.asList(CONTENTEDIT, CONTENTAPPROVE, CONTENTADMINISTRATION);
+    private static List<SystemZone> contentApproveZones = Arrays.asList(CONTENTAPPROVE, CONTENTADMINISTRATION);
+    private static List<SystemZone> contentAdminZones = List.of(CONTENTADMINISTRATION);
+
+    public static boolean includesElevatedZone(Set<SystemZone> zones){
+        return includesAnyZoneOf(zones, elevatedZones);
+    }
+
+    public static boolean includesContentReadZone(Set<SystemZone> zones){
+        return includesAnyZoneOf(zones, contentReadZones);
+    }
+
+    public static boolean includesContentEditZone(Set<SystemZone> zones){
+        return includesAnyZoneOf(zones, contentEditZones);
+    }
+
+    public static boolean includesContentApproveZone(Set<SystemZone> zones){
+        return includesAnyZoneOf(zones, contentApproveZones);
+    }
+
+    public static boolean includesContentAdminZone(Set<SystemZone> zones){
+        return includesAnyZoneOf(zones, contentAdminZones);
+    }
+
+    private static boolean includesAnyZoneOf(Set<SystemZone> zones, List<SystemZone> validZones){
+        for (SystemZone zone : validZones){
+            if (zones.contains(zone)){
+                return true;
+            }
+        }
+        return false;
+    }
 }
 
 

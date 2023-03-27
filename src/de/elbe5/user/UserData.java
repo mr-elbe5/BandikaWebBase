@@ -28,7 +28,6 @@ public class UserData extends BaseData implements IJsonData {
     public static int MAX_PORTRAIT_WIDTH = 200;
     public static int MAX_PORTRAIT_HEIGHT = 200;
 
-    public static int MIN_LOGIN_LENGTH = 4;
     public static int MIN_PASSWORD_LENGTH = 8;
 
     protected String title = "";
@@ -56,6 +55,7 @@ public class UserData extends BaseData implements IJsonData {
 
     protected Set<Integer> groupIds = new HashSet<>();
 
+    //from groups
     protected Set<SystemZone> systemRights = new HashSet<>();
 
     // base data
@@ -253,22 +253,28 @@ public class UserData extends BaseData implements IJsonData {
         return !systemRights.isEmpty() || isRoot();
     }
 
-    public boolean hasAnyElevatedSystemRight() {
-        //more than global read right;
-        return hasAnySystemRight() && !(systemRights.size() == 1 && hasSystemRight(SystemZone.CONTENTREAD));
-    }
-
     public boolean hasSystemRight(SystemZone zone) {
         return systemRights.contains(zone) || isRoot();
     }
 
-    public boolean hasTemplateRight(){
-        return hasSystemRight(SystemZone.TEMPLATE);
+    public boolean hasElevatedSystemRight() {
+        return SystemZone.includesElevatedZone(systemRights) || isRoot();
     }
 
-    public boolean hasAnyContentRight() {
-        return hasSystemRight(SystemZone.CONTENTEDIT) || hasSystemRight(SystemZone.CONTENTAPPROVE) ||
-                hasSystemRight(SystemZone.CONTENTADMINISTRATION);
+    public boolean hasContentReadRight() {
+        return SystemZone.includesContentReadZone(systemRights) || isRoot();
+    }
+
+    public boolean hasContentEditRight() {
+        return SystemZone.includesContentEditZone(systemRights) || isRoot();
+    }
+
+    public boolean hasContentApproveRight() {
+        return SystemZone.includesContentApproveZone(systemRights) || isRoot();
+    }
+
+    public boolean hasContentAdminRight() {
+        return SystemZone.includesContentAdminZone(systemRights) || isRoot();
     }
 
     public boolean isRoot(){

@@ -133,19 +133,34 @@ public class RequestData {
         return data != null && (data.hasAnySystemRight());
     }
 
-    public boolean hasAnyElevatedSystemRight() {
-        UserData data = getLoginUser();
-        return data != null && (data.hasAnyElevatedSystemRight());
-    }
-
-    public boolean hasAnyContentRight() {
-        UserData data = getLoginUser();
-        return data != null && (data.isRoot() || data.hasAnyContentRight());
-    }
-
     public boolean hasSystemRight(SystemZone zone) {
         UserData data = getLoginUser();
-        return data != null && (data.isRoot() || data.hasSystemRight(zone));
+        return data != null && (data.hasSystemRight(zone));
+    }
+
+    public boolean hasElevatedSystemRight() {
+        UserData data = getLoginUser();
+        return data != null && (data.hasElevatedSystemRight());
+    }
+
+    public boolean hasContentReadRight() {
+        UserData data = getLoginUser();
+        return data != null && (data.hasContentReadRight());
+    }
+
+    public boolean hasContentEditRight() {
+        UserData data = getLoginUser();
+        return data != null && (data.hasContentEditRight());
+    }
+
+    public boolean hasContentApproveRight() {
+        UserData data = getLoginUser();
+        return data != null && (data.hasContentApproveRight());
+    }
+
+    public boolean hasContentAdminRight() {
+        UserData data = getLoginUser();
+        return data != null && (data.hasContentAdminRight());
     }
 
     /************ form error *************/
