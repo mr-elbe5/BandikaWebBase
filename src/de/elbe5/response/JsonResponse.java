@@ -31,7 +31,7 @@ public class JsonResponse implements IResponse {
     }
 
     protected boolean sendJsonResponse(HttpServletResponse response) {
-        //Log.log("sending json: " + json);
+        Log.log("sending json: " + json);
         try {
             ServletOutputStream out = response.getOutputStream();
             response.setHeader("Access-Control-Allow-Origin", "*");
@@ -46,7 +46,7 @@ public class JsonResponse implements IResponse {
                 out.write(bytes);
             }
             out.flush();
-            Log.error("json has been sent");
+            Log.info("json has been sent");
         } catch (IOException ioe) {
             Log.error("response error", ioe);
             return false;

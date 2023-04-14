@@ -16,6 +16,8 @@ import de.elbe5.user.UserBean;
 import de.elbe5.user.UserData;
 
 import jakarta.servlet.http.*;
+import org.json.simple.JSONObject;
+
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -212,9 +214,16 @@ public class RequestData {
             } else if (type != null && type.equalsIgnoreCase("application/octet-stream")) {
                 getSinglePartParams();
                 getByteStream();
+            } else if (type != null && type.equalsIgnoreCase("application/json")) {
+                getSinglePartParams();
+                getJsonStream();
+            } else {
+                getSinglePartParams();
             }
         }
-        getSinglePartParams();
+        else {
+            getSinglePartParams();
+        }
     }
 
     private void getByteStream(){
@@ -350,6 +359,26 @@ public class RequestData {
             }
         }
         return null;
+    }
+
+    private void getJsonStream(){
+        try {
+            InputStream in = request.getInputStream();
+            try {
+                JSONObject json = (JSONObject) new JsonDeserializer().deserialize(in);
+                Log.log("received json: "+ json.toJSONString());
+                for (Object key : json.keySet()){
+                    getAttributes().put(key.toString(), json.get(key));
+                }
+            }
+            catch (Exception e){
+                Log.error("unable to get params from json");
+            }
+            in.close();
+        }
+        catch (IOException ioe){
+            Log.error("json input stream error", ioe);
+        }
     }
 
     /************** request attributes ***************/
